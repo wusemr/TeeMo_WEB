@@ -1,21 +1,28 @@
-import { useState } from "react";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
-    const [id, setId] = useState("");
-    const [password, setPassword] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate()
 
+    const [id, setId] = useState("")
+    const [password, setPassword] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
+
+    /**
+     * 
+     * @returns 
+     */
     const signInButtonHandler = async () => {
         if (!id) {
-            alert("아이디를 입력하세요.");
-            return;
+            alert("아이디를 입력하세요.")
+            return
         }
         if (!password) {
-            alert("비밀번호를 입력하세요.");
-            return;
+            alert("비밀번호를 입력하세요.")
+            return
         }
 
-        setIsLoading(true);
+        setIsLoading(true)
 
         try {
             // const response = await fetch(`${process.env.REACT_APP_UBUNTU_SERVER}/api/signin`, {
@@ -23,22 +30,30 @@ const Login = () => {
             //     headers: { "Content-Type": "application/json" },
             //     body: JSON.stringify({ id, pw: password }),
             // })
-            
+
             // if (!response.ok) {
             //     const data = await response.json()
             //     throw new Error(data.message || "로그인 실패")
             // }
 
-            alert("로그인 성공!");
-            setId("");
-            setPassword("");
+            navigate("/main")
+            // alert("로그인 성공!")
+            setId("")
+            setPassword("")
             // TODO: 페이지 이동 로직 추가
         } catch (error) {
-            alert(`로그인 실패: ${error.message}`);
+            alert(`로그인 실패: ${error.message}`)
         } finally {
-            setIsLoading(false);
+            setIsLoading(false)
         }
-    };
+    }
+
+    /**
+     * 
+     */
+    const signUpButtonHandler = () => {
+        navigate("/signup")
+    }
 
     return (
         <div style={{
@@ -104,7 +119,9 @@ const Login = () => {
                 >
                     {isLoading ? "로그인 중..." : "로그인"}
                 </button>
-                <a href="/signup" style={{
+                <a href="/signup"
+                    onClick={signUpButtonHandler}
+                    style={{
                     marginTop: "10px",
                     color: "#95ce67",
                     textDecoration: "none",
@@ -114,7 +131,7 @@ const Login = () => {
                 </a>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Login;
+export default Login
